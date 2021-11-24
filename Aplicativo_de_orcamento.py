@@ -13,12 +13,12 @@ class Category:
 
     def deposit(self, deposit, description=''):
         self.money += deposit
-        self.ledger.append({'amount': deposit, 'description': description})
+        self.ledger.append({'amount': deposit,'description': description})
 
     def withdraw(self, withdrawn, description=''):
         if self.check_funds(withdrawn):
             self.money -= withdrawn
-            self.ledger.append({'amount': withdrawn, 'description': description})
+            self.ledger.append({'amount': -withdrawn, 'description': description})
             return True
         else:
             return False
@@ -29,7 +29,7 @@ class Category:
     def transfer(self, transferred, local):
         if self.check_funds(transferred):
             self.money -= transferred
-            self.ledger.append({'amount': transferred, 'description': f'Transfer to {local.product}'})
+            self.ledger.append({'amount': -transferred, 'description': f'Transfer to {local.product}'})
             local.money += transferred
             local.ledger.append({'amount': transferred, 'description': f'Transfer from {self.product}'})
             return True
@@ -49,4 +49,12 @@ class Category:
             else:
                 if initial_loop == (quanty / 2 + 0.5):
                     initial += self.product
+        for dic in self.ledger:
+          if len(dic['description']) > 23:
+            initial += f'\n{"".join(list(dic["description"][:23]))} {str(dic["amount"])}'
+          else:
+            initial += f'\n{dic["description"]}{" "*(30 - len(str(dic["amount"])) - len(dic["description"]))}{str(dic["amount"])}'
         return initial
+
+def create_spend_chart(categorys):
+    return True
