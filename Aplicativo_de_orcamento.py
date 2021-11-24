@@ -35,3 +35,18 @@ class Category:
             return True
         else:
             return False
+
+    def __str__(self):
+        initial = ''
+        initial_loop = 0
+        quanty = 30 - len(self.product)
+        while initial_loop < quanty:
+            initial += '*'
+            initial_loop += 1
+            if quanty // 2 == quanty / 2:
+                if initial_loop == (quanty / 2):
+                    initial += self.product
+            else:
+                if initial_loop == (quanty / 2 + 0.5):
+                    initial += self.product
+        return initial
